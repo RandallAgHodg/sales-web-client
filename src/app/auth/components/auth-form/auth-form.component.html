@@ -1,0 +1,19 @@
+<div
+  class="flex flex-column gap-3 p-3 bg-white align-items-center border-round"
+>
+  <h1>{{ formTitleText }}</h1>
+  <span class="p-float-label w-full">
+    <input class="w-full" type="email" id="email" pInputText />
+    <label for="email">Email</label>
+  </span>
+  <span class="p-float-label w-full">
+    <input class="w-full" type="password" id="password" pInputText />
+    <label for="password">Password</label>
+  </span>
+  <button
+    class="w-full uppercase text-montserrat"
+    pButton
+    type="button"
+    [label]="submitButtonText"
+  ></button>
+</div>
