@@ -6,7 +6,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { AuthFormComponent } from './components/auth-form/auth-form.component';
 import { SharedModule } from '../shared/shared.module';
-import { IsRegisterFormDirective } from './directives/is-register-form.directive';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,8 +14,7 @@ import { IsRegisterFormDirective } from './directives/is-register-form.directive
     LoginComponent,
     RegisterComponent,
     AuthFormComponent,
-    IsRegisterFormDirective,
   ],
-  imports: [CommonModule, AuthRoutingModule, SharedModule],
+  imports: [ReactiveFormsModule, CommonModule, AuthRoutingModule, SharedModule],
 })
 export class AuthModule {}

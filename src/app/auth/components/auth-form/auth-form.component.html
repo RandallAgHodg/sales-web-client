@@ -1,19 +1,45 @@
-<div
-  class="flex flex-column gap-3 p-3 bg-white align-items-center border-round"
+<form
+  [formGroup]="authForm"
+  (submit)="submit()"
+  class="flex flex-column shadow-1 gap-4 p-3 bg-white align-items-center border-round"
 >
   <h1>{{ formTitleText }}</h1>
   <span class="p-float-label w-full">
-    <input class="w-full" type="email" id="email" pInputText />
+    <input
+      class="w-full"
+      formControlName="email"
+      type="email"
+      id="email"
+      pInputText
+    />
     <label for="email">Email</label>
   </span>
   <span class="p-float-label w-full">
-    <input class="w-full" type="password" id="password" pInputText />
+    <input
+      class="w-full"
+      formControlName="password"
+      type="password"
+      id="password"
+      pInputText
+    />
     <label for="password">Password</label>
   </span>
   <button
     class="w-full uppercase text-montserrat"
+    (click)="submit()"
     pButton
     type="button"
+    [disabled]="isInvalidForm()"
     [label]="submitButtonText"
   ></button>
-</div>
+  <span
+    [routerLink]="linkText.route"
+    class="align-self-start text-xs font-medium cursor-pointer hover:font-bold hover:underline"
+  >
+    {{ linkText.text }}
+  </span>
+  <app-error-message
+    *ngFor="let error of errors"
+    [message]="error"
+  ></app-error-message>
+</form>
