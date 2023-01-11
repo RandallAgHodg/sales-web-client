@@ -26,7 +26,7 @@
     <label for="password">Password</label>
   </span>
   <button
-    *ngIf="!isLoading"
+    [loading]="isLoading"
     class="w-full uppercase text-montserrat"
     (click)="submit()"
     pButton
@@ -34,11 +34,6 @@
     [disabled]="isInvalidForm()"
     [label]="submitButtonText"
   ></button>
-  <i
-    *ngIf="isLoading"
-    class="pi pi-spin pi-spinner"
-    style="font-size: 2rem"
-  ></i>
 
   <span
     [routerLink]="linkText.route"

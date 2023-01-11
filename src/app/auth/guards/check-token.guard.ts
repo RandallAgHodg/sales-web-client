@@ -15,36 +15,13 @@ import { UserService } from '../services/user.service';
 @Injectable({
   providedIn: 'root',
 })
-export class CheckTokenGuard implements CanActivate, CanLoad {
+export class CheckTokenGuard implements CanActivate {
   constructor(
     private readonly _userService: UserService,
     private readonly _router: Router
   ) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
-    return this._userService.renew().pipe(
-      tap((valid) => {
-        if (!valid) {
-          this._router.navigateByUrl('/auth');
-        }
-      })
-    );
-  }
-  canLoad(
-    route: Route,
-    segments: UrlSegment[]
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
+  canActivate(): Observable<boolean> | boolean {
     return this._userService.renew().pipe(
       tap((valid) => {
         if (!valid) {

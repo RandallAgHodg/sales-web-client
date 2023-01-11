@@ -17,6 +17,7 @@ export class AuthFormComponent implements OnInit {
   authForm!: FormGroup;
   errors: string[] = [];
   isLoading: boolean = false;
+
   passwordOptions: {
     isPasswordField: boolean;
     passwordFieldType: 'text' | 'password';
@@ -42,30 +43,29 @@ export class AuthFormComponent implements OnInit {
   }
 
   submit(): void {
-    this.isLoading = true;
     if (this.isRegisterForm) {
       this._userService.register(this.authForm.value).subscribe((res) => {
-        if (res === true) {
-          console.log('salio bien');
-        } else {
-          this.errors = res;
-        }
+        this.handleAuth(res);
       });
     } else {
       this._userService.login(this.authForm.value).subscribe((res) => {
-        console.log(res);
-        if (res === true) {
-          console.log('Salio bien');
-        } else {
-          this.errors = res;
-        }
+        this.handleAuth(res);
       });
     }
-    this.isLoading = false;
   }
 
   isInvalidForm(): boolean {
     return this.authForm.invalid;
+  }
+
+  handleAuth(res: unknown) {
+    this.isLoading = true;
+    if (res === true) {
+      this._router.navigate(['/dashboard/products']);
+    } else {
+      this.errors = res as string[];
+    }
+    this.isLoading = false;
   }
 
   setPasswordField() {
@@ -84,7 +84,7 @@ export class AuthFormComponent implements OnInit {
   initForm(): FormGroup {
     return this._formBuilder.group({
       email: ['correo@correo.com', [Validators.required, Validators.email]],
-      password: ['facil123', [Validators.required]],
+      password: ['Facil123*', [Validators.required]],
     });
   }
 
@@ -99,7 +99,7 @@ export class AuthFormComponent implements OnInit {
           },
         ]
       : [
-          'Log in to your account',
+          'Log into your account',
           'Login',
           {
             route: '/auth/register',
