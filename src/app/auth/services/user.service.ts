@@ -29,7 +29,10 @@ export class UserService {
         }
       }),
       map((resp) => resp.ok),
-      catchError((err) => of(err.error.errors))
+      catchError((err) => {
+        console.log(err);
+        return of(err.error.errors);
+      })
     );
   }
 
@@ -62,7 +65,7 @@ export class UserService {
   }
 
   getToken(): string {
-    return localStorage.getItem(TOKEN)!.toString();
+    return localStorage.getItem(TOKEN)?.toString() || '';
   }
 
   deleteToken() {
@@ -72,7 +75,6 @@ export class UserService {
   decodeUserFromToken(): User {
     const token = this.getToken();
     const result: any = jwtDecode(token);
-    console.log(result);
 
     const nameKey =
       'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name';

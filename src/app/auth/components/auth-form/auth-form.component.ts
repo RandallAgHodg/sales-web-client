@@ -1,7 +1,7 @@
 import { Input, OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -16,6 +16,18 @@ export class AuthFormComponent implements OnInit {
   linkText!: { route: string; text: string };
   authForm!: FormGroup;
   errors: string[] = [];
+  isLoading: boolean = false;
+  passwordOptions: {
+    isPasswordField: boolean;
+    passwordFieldType: 'text' | 'password';
+    passwordIcon:
+      | 'pi pi-eye cursor-pointer font-bold'
+      | 'pi pi-eye-slash cursor-pointer font-bold';
+  } = {
+    isPasswordField: true,
+    passwordFieldType: 'password',
+    passwordIcon: 'pi pi-eye cursor-pointer font-bold',
+  };
 
   constructor(
     private readonly _userService: UserService,
@@ -30,29 +42,43 @@ export class AuthFormComponent implements OnInit {
   }
 
   submit(): void {
-    console.log(this.authForm.value, String(this.isInvalidForm()));
-
+    this.isLoading = true;
     if (this.isRegisterForm) {
-      this._userService.register(this.authForm.value).subscribe((ok) => {
-        if (ok === true) {
+      this._userService.register(this.authForm.value).subscribe((res) => {
+        if (res === true) {
           console.log('salio bien');
         } else {
-          this.errors = ok;
+          this.errors = res;
         }
       });
     } else {
+      this._userService.login(this.authForm.value).subscribe((res) => {
+        console.log(res);
+        if (res === true) {
+          console.log('Salio bien');
+        } else {
+          this.errors = res;
+        }
+      });
     }
+    this.isLoading = false;
   }
 
   isInvalidForm(): boolean {
     return this.authForm.invalid;
   }
 
-  isUnvalidField(name: string): boolean | null {
-    return (
-      this.authForm.controls[name].errors &&
-      this.authForm.controls[name].touched
-    );
+  setPasswordField() {
+    this.passwordOptions.isPasswordField =
+      !this.passwordOptions.isPasswordField;
+    if (this.passwordOptions.isPasswordField) {
+      this.passwordOptions.passwordIcon = 'pi pi-eye cursor-pointer font-bold';
+      this.passwordOptions.passwordFieldType = 'password';
+    } else {
+      this.passwordOptions.passwordIcon =
+        'pi pi-eye-slash cursor-pointer font-bold';
+      this.passwordOptions.passwordFieldType = 'text';
+    }
   }
 
   initForm(): FormGroup {

@@ -14,17 +14,19 @@
     />
     <label for="email">Email</label>
   </span>
-  <span class="p-float-label w-full">
+  <span class="p-float-label p-input-icon-right w-full">
+    <i (click)="setPasswordField()" [class]="passwordOptions.passwordIcon"></i>
     <input
       class="w-full"
       formControlName="password"
-      type="password"
+      [type]="passwordOptions.passwordFieldType"
       id="password"
       pInputText
     />
     <label for="password">Password</label>
   </span>
   <button
+    *ngIf="!isLoading"
     class="w-full uppercase text-montserrat"
     (click)="submit()"
     pButton
@@ -32,6 +34,12 @@
     [disabled]="isInvalidForm()"
     [label]="submitButtonText"
   ></button>
+  <i
+    *ngIf="isLoading"
+    class="pi pi-spin pi-spinner"
+    style="font-size: 2rem"
+  ></i>
+
   <span
     [routerLink]="linkText.route"
     class="align-self-start text-xs font-medium cursor-pointer hover:font-bold hover:underline"
