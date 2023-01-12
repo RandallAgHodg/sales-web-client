@@ -5,6 +5,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { SalesComponent } from './sales/sales.component';
 import { MainComponent } from './main/main.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,6 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
     SalesComponent,
     MainComponent,
   ],
-  imports: [CommonModule, DashboardRoutingModule],
+  imports: [CommonModule, DashboardRoutingModule, SharedModule],
 })
 export class DashboardModule {}

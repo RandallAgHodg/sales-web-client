@@ -1,0 +1,29 @@
+<ul class="flex justify-content-evenly align-items-center m-0 shadow-2">
+  <h1 class="">LOGO</h1>
+  <ul class="flex list-none gap-2">
+    <li
+      [routerLink]="['/dashboard/sales']"
+      routerLinkActive="border-round bg-blue-100 px-2 py-1"
+      class="cursor-pointer hover:underline"
+    >
+      Sales
+    </li>
+    <li
+      routerLink="/dashboard/products"
+      class="cursor-pointer hover:underline"
+      routerLinkActive="border-round bg-blue-100 px-2 py-1"
+    >
+      Products
+    </li>
+    <li
+      routerLink="/dashboard/profile"
+      routerLinkActive="border-round bg-blue-100 px-2 py-1"
+      class="cursor-pointer hover:underline"
+    >
+      Profile
+    </li>
+  </ul>
+  <div class="flex list-none gap-2">
+    <li (click)="logout()" class="cursor-pointer hover:underline">Logout</li>
+  </div>
+</ul>

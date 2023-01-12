@@ -15,13 +15,23 @@ import { UserService } from '../services/user.service';
 @Injectable({
   providedIn: 'root',
 })
-export class CheckTokenGuard implements CanActivate {
+export class CheckTokenGuard implements CanActivate, CanLoad {
   constructor(
     private readonly _userService: UserService,
     private readonly _router: Router
   ) {}
 
   canActivate(): Observable<boolean> | boolean {
+    return this._userService.renew().pipe(
+      tap((valid) => {
+        if (!valid) {
+          this._router.navigateByUrl('/auth');
+        }
+      })
+    );
+  }
+
+  canLoad(): Observable<boolean> | boolean {
     return this._userService.renew().pipe(
       tap((valid) => {
         if (!valid) {
