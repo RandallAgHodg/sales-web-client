@@ -1,0 +1,12 @@
+<form class="flex justify-content-around" [formGroup]="searchForm">
+  <input class="" formControlName="query" type="text" id="query" pInputText />
+  <div class="flex bg-red-500 w-full">
+    <h5>Price between {{ priceRange[0] }} - {{ priceRange[1] }}</h5>
+    <p-slider
+      class="w-full"
+      formControlName="priceRange"
+      [range]="true"
+      (onChange)="onChange($event)"
+    ></p-slider>
+  </div>
+</form>

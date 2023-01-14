@@ -5,6 +5,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ErrorMessageComponent } from './error-message/error-message.component';
 import { MenuHeaderComponent } from './menu-header/menu-header.component';
 import { RouterModule } from '@angular/router';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { SliderModule } from 'primeng/slider';
+
 @NgModule({
   declarations: [ErrorMessageComponent, MenuHeaderComponent],
   imports: [CommonModule, RouterModule],
@@ -13,6 +16,8 @@ import { RouterModule } from '@angular/router';
     InputTextModule,
     ErrorMessageComponent,
     MenuHeaderComponent,
+    InputNumberModule,
+    SliderModule,
   ],
 })
 export class SharedModule {}

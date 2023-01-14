@@ -4,9 +4,23 @@ import { SalesComponent } from './sales/sales.component';
 import { MainComponent } from './main/main.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { ProfileComponent } from './profile/profile.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProductsComponent } from './products/products/products.component';
 
 @NgModule({
-  declarations: [SalesComponent, MainComponent],
-  imports: [CommonModule, DashboardRoutingModule, SharedModule],
+  declarations: [
+    ProductsComponent,
+    SalesComponent,
+    MainComponent,
+    ProfileComponent,
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    DashboardRoutingModule,
+    ReactiveFormsModule,
+    SharedModule,
+  ],
 })
 export class DashboardModule {}

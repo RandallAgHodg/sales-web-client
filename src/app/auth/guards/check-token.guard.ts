@@ -24,6 +24,8 @@ export class CheckTokenGuard implements CanActivate, CanLoad {
   canActivate(): Observable<boolean> | boolean {
     return this._userService.renew().pipe(
       tap((valid) => {
+        console.log(valid);
+
         if (!valid) {
           this._router.navigateByUrl('/auth');
         }

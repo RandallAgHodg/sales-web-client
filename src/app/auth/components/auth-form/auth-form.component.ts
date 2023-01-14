@@ -59,13 +59,15 @@ export class AuthFormComponent implements OnInit {
   }
 
   handleAuth(res: unknown) {
-    this.isLoading = true;
     if (res === true) {
+      this.isLoading = true;
       this._router.navigate(['/dashboard/products']);
+      this.isLoading = false;
     } else {
+      this.isLoading = true;
       this.errors = res as string[];
+      this.isLoading = false;
     }
-    this.isLoading = false;
   }
 
   setPasswordField() {
