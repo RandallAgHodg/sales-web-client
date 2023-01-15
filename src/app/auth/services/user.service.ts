@@ -52,7 +52,6 @@ export class UserService {
     const url: string = `${this._baseUrl}/authenticate`;
     return this.http.get<BaseResponse<string>>(url).pipe(
       map((resp) => {
-        console.log('this._user');
         this.setToken(resp.data);
         this._user = { ...this.decodeUserFromToken() };
         return resp.ok;

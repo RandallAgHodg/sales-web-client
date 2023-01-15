@@ -1,12 +1,63 @@
-<form class="flex justify-content-around" [formGroup]="searchForm">
-  <input class="" formControlName="query" type="text" id="query" pInputText />
-  <div class="flex bg-red-500 w-full">
-    <h5>Price between {{ priceRange[0] }} - {{ priceRange[1] }}</h5>
-    <p-slider
-      class="w-full"
-      formControlName="priceRange"
-      [range]="true"
-      (onChange)="onChange($event)"
-    ></p-slider>
+<div class="relative flex flex-column justify-content-start h-screen">
+  <form
+    class="flex p-2 gap-4 align-items-center justify-content-center"
+    [formGroup]="searchForm"
+  >
+    <div class="flex gap-1">
+      <p-checkbox
+        formControlName="isAvailable"
+        [binary]="true"
+        inputId="isAvailable"
+        name="isAvailable"
+      ></p-checkbox>
+      <label class="cursor-pointer" for="isAvailable"
+        >Only available products</label
+      >
+    </div>
+    <div class="flex gap-3 w-8">
+      <input
+        class="w-full"
+        formControlName="name"
+        type="text"
+        placeholder="Search a product by its name"
+        pInputText
+        (keyup)="search($event)"
+      />
+      <p-button
+        label="Search"
+        icon="pi pi-search"
+        iconPos="right"
+        [loading]="isLoadingSearch"
+        (onClick)="submit()"
+      ></p-button>
+    </div>
+  </form>
+  <i
+    *ngIf="isLoadingProducts"
+    class="pi pi-spin pi-spinner"
+    style="font-size: 2rem"
+  ></i>
+
+  <div
+    *ngIf="!isLoadingProducts"
+    class="max-w-full justify-content-center grid p-3 gap-3"
+  >
+    <div
+      [routerLink]="['/dashboard/product/', product.id]"
+      class="col-3 cursor-pointer border-round border-white bg-primary border-1"
+      *ngFor="let product of products"
+    >
+      <div>
+        <h2>{{ product.name }}</h2>
+        <h3>{{ product.price | currency : "USD" }}</h3>
+        <h5 class="">{{ product.stock }} left in stock</h5>
+      </div>
+    </div>
   </div>
-</form>
+  <div
+    routerLink="/dashboard/products/create"
+    class="fixed flex justify-content-center align-items-center bg-primary w-2rem h-2rem cursor-pointer hover:bg-purple-900 border-circle p-3 shadow-2 mr-1"
+  >
+    <i class="pi pi-plus"></i>
+  </div>
+</div>

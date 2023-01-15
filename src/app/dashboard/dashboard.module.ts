@@ -7,6 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ProfileComponent } from './profile/profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductsComponent } from './products/products/products.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ProductsComponent } from './products/products/products.component';
     FormsModule,
     DashboardRoutingModule,
     ReactiveFormsModule,
+    RouterModule,
     SharedModule,
   ],
 })

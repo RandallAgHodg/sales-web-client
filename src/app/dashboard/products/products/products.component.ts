@@ -10,8 +10,10 @@ import { ProductsService } from '../products.service';
 })
 export class ProductsComponent implements OnInit {
   products: Product[] = [];
+  isLoadingSearch: boolean = false;
+  isLoadingProducts: boolean = false;
   searchForm!: FormGroup;
-  priceRange!: [number, number];
+  priceRange: [number, number] = [10, 20];
   constructor(
     private readonly _productService: ProductsService,
     private readonly _formBuilder: FormBuilder
@@ -19,29 +21,36 @@ export class ProductsComponent implements OnInit {
     this.searchForm = this.initForm();
   }
   ngOnInit(): void {
+    this.isLoadingProducts = true;
     this.getAllProducts();
+    this.isLoadingProducts = false;
   }
 
   getAllProducts() {
     this._productService.getAllProducts().subscribe((resp) => {
       this.products = resp;
-      console.log(JSON.stringify(resp) + 'AAAA');
     });
-    console.log(this.products);
   }
 
   initForm(): FormGroup {
     return this._formBuilder.group({
-      query: [''],
-      priceRange: [[,]],
-      isActive: [true],
+      name: [''],
+      isAvailable: [false],
     });
   }
 
-  onChange(e: any) {
-    this.priceRange = this.searchForm.get('priceRange')?.value as unknown as [
-      number,
-      number
-    ];
+  submit() {
+    console.log(this.searchForm.value);
+  }
+
+  search(e: unknown) {
+    console.log('Nya');
+    this._productService
+      .searchProducts(this.searchForm.value)
+      .subscribe((resp) => {
+        this.isLoadingProducts = true;
+        this.products = resp;
+        this.isLoadingProducts = false;
+      });
   }
 }

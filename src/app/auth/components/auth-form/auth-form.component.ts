@@ -63,6 +63,7 @@ export class AuthFormComponent implements OnInit {
       this.isLoading = true;
       this._router.navigate(['/dashboard/products']);
       this.isLoading = false;
+      console.log('Deja de cargar', this.isLoading);
     } else {
       this.isLoading = true;
       this.errors = res as string[];

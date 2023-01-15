@@ -2,7 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { BaseResponse } from 'src/app/types/contracts/baseResponse.type';
-import { Product } from 'src/app/types/products/product.type';
+import {
+  Product,
+  SearchProductRequest,
+} from 'src/app/types/products/product.type';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -25,5 +28,16 @@ export class ProductsService {
     return this._http
       .get<BaseResponse<Product>>(this.url)
       .pipe(catchError((err) => of(err.error.errors)));
+  }
+
+  searchProducts(request: SearchProductRequest) {
+    const url = `${this.url}/search?isAvailable=${String(request.isAvailable)}${
+      request.name && `&name=${request.name}`
+    }`;
+    return this._http.get<BaseResponse<Product[]>>(url).pipe(
+      map((resp) => {
+        return resp.data;
+      })
+    );
   }
 }
