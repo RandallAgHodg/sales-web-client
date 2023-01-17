@@ -1,0 +1,96 @@
+<p-dialog
+  header="Add New Product"
+  (onHide)="hideModal()"
+  [closable]="false"
+  [visible]="isModalVisible"
+  [modal]="true"
+  class="w-full"
+>
+  <form class="flex flex-column gap-3" [formGroup]="productForm">
+    <input
+      class="w-full"
+      formControlName="name"
+      type="text"
+      id="name"
+      placeholder="Product Name. i.e. Coquita"
+      pInputText
+    />
+    <div class="grid justify-content-evenly">
+      <div class="flex flex-column col-6">
+        <label for="price">Price</label>
+        <p-inputNumber
+          formControlName="price"
+          [showButtons]="true"
+          buttonLayout="horizontal"
+          inputId="price"
+          spinnerMode="horizontal"
+          [step]="1"
+          [min]="0"
+          decrementButtonClass="p-button-danger"
+          incrementButtonClass="p-button-success"
+          incrementButtonIcon="pi pi-plus"
+          decrementButtonIcon="pi pi-minus"
+          mode="currency"
+          currency="USD"
+        >
+        </p-inputNumber>
+      </div>
+      <div class="col-6">
+        <label for="stock">Stock</label>
+        <p-inputNumber
+          formControlName="stock"
+          [showButtons]="true"
+          buttonLayout="horizontal"
+          [min]="0"
+          inputId="stock"
+          spinnerMode="horizontal"
+          [step]="1"
+          decrementButtonClass="p-button-danger"
+          incrementButtonClass="p-button-success"
+          incrementButtonIcon="pi pi-plus"
+          decrementButtonIcon="pi pi-minus"
+        >
+        </p-inputNumber>
+      </div>
+    </div>
+    <div *ngIf="productInfo" class="flex gap-3 justify-content-center w-full">
+      <p-checkbox
+        formControlName="isAvailable"
+        [binary]="true"
+        inputId="isAvailable"
+      ></p-checkbox>
+
+      <label for="isAvailable">Set as available</label>
+    </div>
+    <app-error-message
+      *ngFor="let error of errors"
+      [message]="error"
+    ></app-error-message>
+  </form>
+  <ng-template pTemplate="footer"
+    ><div class="flex justify-content-between">
+      <button
+        pButton
+        pRipple
+        (click)="hideModal()"
+        type="button"
+        label="X Cancel"
+        class="p-button-danger p-button-text"
+      ></button>
+      <button
+        *ngIf="!isLoading"
+        pButton
+        pRipple
+        type="button"
+        [disabled]="!isValidForm()"
+        (click)="handleProductUpload()"
+        icon="pi pi-check"
+        [label]="productInfo ? as : asdsa"
+        class="p-button-text"
+      ></button>
+      <div *ngIf="isLoading">
+        <i class="pi pi-spinner"></i>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>
