@@ -1,1 +1,35 @@
-<p>product works!</p>
+<div *ngIf="product" class="flex flex-column gap-5">
+  <div class="flex justify-content-evenly">
+    <div class="flex flex-column align-items-center">
+      <h2 class="font-light">
+        <span>{{ product.id }}</span>
+      </h2>
+      <h2 class="font-light">
+        Sale price: <span>{{ product.price | currency }}</span>
+      </h2>
+    </div>
+    <div class="flex flex-column align-items-center">
+      <h2 class="font-light">
+        <span>{{ product.name }} </span>
+      </h2>
+      <h2 class="font-light">
+        <span>{{ product.stock }}</span> left in stock
+      </h2>
+    </div>
+  </div>
+  <div class="w-full text-center">
+    Registered at: {{ product.createdAt | date }}
+  </div>
+  <button
+    pButton
+    pRipple
+    iconPos="right"
+    icon="pi pi-pencil"
+    type="Update"
+    label="Warning"
+    (click)="update()"
+    class="p-button-warning w-3 align-self-center"
+  ></button>
+</div>
+
+<app-modal-product-form [productInfo]="product"></app-modal-product-form>

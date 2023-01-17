@@ -36,20 +36,28 @@ export class AuthFormComponent implements OnInit {
     private readonly _router: Router
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     [this.formTitleText, this.submitButtonText, this.linkText] =
       this.setAuthFormText();
     this.authForm = this.initForm();
   }
 
-  submit(): void {
+  submit() {
     if (this.isRegisterForm) {
+      this.isLoading = true;
       this._userService.register(this.authForm.value).subscribe((res) => {
         this.handleAuth(res);
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 1000);
       });
     } else {
+      this.isLoading = true;
       this._userService.login(this.authForm.value).subscribe((res) => {
         this.handleAuth(res);
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 1000);
       });
     }
   }
@@ -60,14 +68,9 @@ export class AuthFormComponent implements OnInit {
 
   handleAuth(res: unknown) {
     if (res === true) {
-      this.isLoading = true;
       this._router.navigate(['/dashboard/products']);
-      this.isLoading = false;
-      console.log('Deja de cargar', this.isLoading);
     } else {
-      this.isLoading = true;
       this.errors = res as string[];
-      this.isLoading = false;
     }
   }
 

@@ -8,13 +8,19 @@ import { ProfileComponent } from './profile/profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductsComponent } from './products/products/products.component';
 import { RouterModule } from '@angular/router';
+import { ModalProductFormComponent } from './components/modal-product-form/modal-product-form.component';
+import { FABComponent } from './components/fab/fab.component';
+import { ProductComponent } from './products/product/product.component';
 
 @NgModule({
   declarations: [
     ProductsComponent,
+    ProductComponent,
     SalesComponent,
     MainComponent,
     ProfileComponent,
+    ModalProductFormComponent,
+    FABComponent,
   ],
   imports: [
     CommonModule,

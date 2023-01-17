@@ -25,11 +25,9 @@
     />
     <label for="password">Password</label>
   </span>
-  <i
-    *ngIf="isLoading"
-    class="pi pi-spin pi-spinner"
-    style="font-size: 2rem"
-  ></i>
+  <div *ngIf="isLoading">
+    <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+  </div>
 
   <button
     *ngIf="!isLoading"

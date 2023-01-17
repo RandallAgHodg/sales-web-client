@@ -11,3 +11,14 @@ export type SearchProductRequest = {
   isAvailable: boolean;
   name: string;
 };
+
+export type CreateProductRequest = {
+  name: string;
+  price: number;
+  stock: number;
+};
+
+export type UpdateProductRequest = CreateProductRequest & {
+  id: string;
+  isAvailable: boolean;
+};

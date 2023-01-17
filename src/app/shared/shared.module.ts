@@ -8,12 +8,14 @@ import { RouterModule } from '@angular/router';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { SliderModule } from 'primeng/slider';
 import { CheckboxModule } from 'primeng/checkbox';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
   declarations: [ErrorMessageComponent, MenuHeaderComponent],
   imports: [CommonModule, RouterModule],
   exports: [
     ButtonModule,
+    DialogModule,
     CheckboxModule,
     InputTextModule,
     ErrorMessageComponent,

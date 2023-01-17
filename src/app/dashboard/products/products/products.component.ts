@@ -23,7 +23,9 @@ export class ProductsComponent implements OnInit {
   ngOnInit(): void {
     this.isLoadingProducts = true;
     this.getAllProducts();
-    this.isLoadingProducts = false;
+    setTimeout(() => {
+      this.isLoadingProducts = false;
+    }, 1000);
   }
 
   getAllProducts() {
@@ -43,14 +45,13 @@ export class ProductsComponent implements OnInit {
     console.log(this.searchForm.value);
   }
 
-  search(e: unknown) {
-    console.log('Nya');
+  search(e?: unknown) {
+    this.isLoadingProducts = true;
     this._productService
       .searchProducts(this.searchForm.value)
       .subscribe((resp) => {
-        this.isLoadingProducts = true;
         this.products = resp;
-        this.isLoadingProducts = false;
       });
+    this.isLoadingProducts = false;
   }
 }

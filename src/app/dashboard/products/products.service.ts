@@ -7,6 +7,10 @@ import {
   SearchProductRequest,
 } from 'src/app/types/products/product.type';
 import { environment } from 'src/environments/environment';
+import {
+  CreateProductRequest,
+  UpdateProductRequest,
+} from '../../types/products/product.type';
 
 @Injectable({
   providedIn: 'root',
@@ -24,9 +28,9 @@ export class ProductsService {
   }
 
   getProduct(id: string): Observable<Product> {
-    this.url = `${this.url}/${id}`;
+    const url = `${this.url}/${id}`;
     return this._http
-      .get<BaseResponse<Product>>(this.url)
+      .get<BaseResponse<Product>>(url)
       .pipe(catchError((err) => of(err.error.errors)));
   }
 
@@ -39,5 +43,34 @@ export class ProductsService {
         return resp.data;
       })
     );
+  }
+
+  addProduct(request: CreateProductRequest) {
+    return this._http
+      .post<BaseResponse<Product>>(this.url, request)
+      .pipe(catchError((err) => of(err.error.errors)));
+  }
+
+  getProductById(id: string) {
+    const url = `${this.url}/${id}`;
+    return this._http
+      .get<BaseResponse<Product>>(url)
+      .pipe(catchError((err) => of(err.error.errors)));
+  }
+
+  updateProduct(request: UpdateProductRequest) {
+    console.log(request);
+
+    const url = `${this.url}/${request.id}`;
+    return this._http
+      .put<BaseResponse<string>>(url, request)
+      .pipe(catchError((err) => of(err.error.errors)));
+  }
+
+  deleteProduct(id: string) {
+    const url = `${this.url}/${id}`;
+    return this._http
+      .delete<BaseResponse<string>>(url)
+      .pipe(catchError((err) => of(err.error.errors)));
   }
 }
