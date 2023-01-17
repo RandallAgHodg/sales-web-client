@@ -12,7 +12,7 @@ import { switchMap } from 'rxjs';
 })
 export class ProductComponent implements OnInit {
   product!: Product;
-
+  errors: string[] = [];
   constructor(
     private readonly _activatedRoute: ActivatedRoute,
     private readonly _productService: ProductsService,
@@ -38,5 +38,15 @@ export class ProductComponent implements OnInit {
 
   update() {
     this._modalService.setModalVisible();
+  }
+
+  delete() {
+    this._productService.deleteProduct(this.product.id).subscribe((resp) => {
+      if (resp.ok === true) {
+        this._router.navigateByUrl('/dashboard/products');
+      } else {
+        this.errors = resp as unknown as string[];
+      }
+    });
   }
 }

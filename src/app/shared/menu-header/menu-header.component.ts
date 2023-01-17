@@ -8,11 +8,14 @@ import { UserService } from '../../auth/services/user.service';
   styles: [],
 })
 export class MenuHeaderComponent implements OnInit {
+  userId!: string;
   constructor(
     private readonly _userService: UserService,
     private readonly _router: Router
   ) {}
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userId = this._userService.user.id;
+  }
 
   logout() {
     this._userService.logout();

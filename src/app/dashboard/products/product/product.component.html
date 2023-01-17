@@ -20,16 +20,31 @@
   <div class="w-full text-center">
     Registered at: {{ product.createdAt | date }}
   </div>
-  <button
-    pButton
-    pRipple
-    iconPos="right"
-    icon="pi pi-pencil"
-    type="Update"
-    label="Warning"
-    (click)="update()"
-    class="p-button-warning w-3 align-self-center"
-  ></button>
+  <div class="flex justify-content-evenly">
+    <button
+      pButton
+      pRipple
+      iconPos="right"
+      icon="pi pi-trash"
+      type="Delete"
+      label="Delete"
+      (click)="delete()"
+      class="p-button-danger w-3 align-self-center"
+    ></button>
+    <button
+      pButton
+      pRipple
+      iconPos="right"
+      icon="pi pi-pencil"
+      type="Update"
+      label="Warning"
+      (click)="update()"
+      class="p-button-warning w-3 align-self-center"
+    ></button>
+  </div>
 </div>
-
+<app-error-message
+  *ngFor="let error of errors"
+  [message]="error"
+></app-error-message>
 <app-modal-product-form [productInfo]="product"></app-modal-product-form>
