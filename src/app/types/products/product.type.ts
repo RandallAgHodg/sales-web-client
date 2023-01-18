@@ -8,7 +8,7 @@ export type Product = {
 };
 
 export type SearchProductRequest = {
-  isAvailable: boolean;
+  isAvailable?: boolean;
   name: string;
 };
 

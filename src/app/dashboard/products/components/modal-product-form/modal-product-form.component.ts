@@ -1,10 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ProductsService } from '../../products/products.service';
 import { Router } from '@angular/router';
 import { ModalService } from '../modal.service';
-import { Product } from 'src/app/types/products/product.type';
-import { UpdateProductRequest } from '../../../types/products/product.type';
+import {
+  Product,
+  UpdateProductRequest,
+} from 'src/app/types/products/product.type';
+import { ProductsService } from '../../products.service';
 
 @Component({
   selector: 'app-modal-product-form',
@@ -28,13 +30,18 @@ export class ModalProductFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.productForm = this.initForm();
-    console.log(this.productInfo);
 
     this._modalService.modalState$.subscribe((visible) => {
       if (this.productInfo) {
+        this.formText = ['Update a product', 'Update'];
         this.productForm.controls['name'].setValue(this.productInfo.name);
         this.productForm.controls['price'].setValue(this.productInfo.price);
         this.productForm.controls['stock'].setValue(this.productInfo.stock);
+        this.productForm.controls['isAvailable'].setValue(
+          this.productInfo.isAvailable
+        );
+      } else {
+        this.formText = ['Add a new product', 'Add'];
       }
       this.isModalVisible = visible;
     });
@@ -59,9 +66,9 @@ export class ModalProductFormComponent implements OnInit {
 
   handleProductUpload() {
     if (this.productInfo) {
-      this.addNewProduct();
-    } else {
       this.updateProduct();
+    } else {
+      this.addNewProduct();
     }
   }
 
@@ -86,18 +93,19 @@ export class ModalProductFormComponent implements OnInit {
   }
 
   updateProduct() {
-    const { id, isAvailable } = this.productInfo;
+    const { id } = this.productInfo;
     this.isLoading = true;
     this._productsService
       .updateProduct({
         ...this.productForm.value,
         id,
-        isAvailable,
       })
       .subscribe((resp) => {
+        console.log(resp);
+
         if (resp.ok === true) {
           this.hideModal();
-          this._router.navigate([`/dashboard/product/${resp.data.id}`]);
+          this._router.navigateByUrl('/dashboard/products');
           this.isLoading = false;
         } else {
           this.errors = resp as unknown as string[];

@@ -13,7 +13,6 @@ export class ProductsComponent implements OnInit {
   isLoadingSearch: boolean = false;
   isLoadingProducts: boolean = false;
   searchForm!: FormGroup;
-  priceRange: [number, number] = [10, 20];
   constructor(
     private readonly _productService: ProductsService,
     private readonly _formBuilder: FormBuilder
@@ -45,13 +44,50 @@ export class ProductsComponent implements OnInit {
     console.log(this.searchForm.value);
   }
 
-  search(e?: unknown) {
+  getAvailableProducts(e?: unknown) {
     this.isLoadingProducts = true;
-    this._productService
-      .searchProducts(this.searchForm.value)
-      .subscribe((resp) => {
+    if (
+      !this.searchForm.controls['isAvailable'].value &&
+      this.searchForm.controls['name'].value === ''
+    ) {
+      this._productService.getAllProducts().subscribe((resp) => {
         this.products = resp;
       });
+    } else {
+      if (this.searchForm.controls['name'].value === '') {
+        this._productService
+          .searchProducts({ ...this.searchForm.value })
+          .subscribe((resp) => {
+            this.products = resp;
+          });
+      } else {
+        this._productService
+          .searchProducts(this.searchForm.value)
+          .subscribe((resp) => {
+            this.products = resp;
+          });
+      }
+    }
+    this.isLoadingProducts = false;
+  }
+
+  search(e?: unknown) {
+    this.isLoadingProducts = true;
+
+    if (this.searchForm.controls['name'].value === '') {
+      console.log('vacio');
+
+      this._productService.getAllProducts().subscribe((resp) => {
+        this.products = resp;
+      });
+    } else {
+      this._productService
+        .searchProducts({ ...this.searchForm.value })
+        .subscribe((resp) => {
+          this.products = resp;
+        });
+    }
+
     this.isLoadingProducts = false;
   }
 }

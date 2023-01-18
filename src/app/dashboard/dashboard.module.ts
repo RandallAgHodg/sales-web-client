@@ -7,11 +7,12 @@ import { ProfileComponent } from './profile/profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductsComponent } from './products/products/products.component';
 import { RouterModule } from '@angular/router';
-import { ModalProductFormComponent } from './components/modal-product-form/modal-product-form.component';
-import { FABComponent } from './components/fab/fab.component';
 import { ProductComponent } from './products/product/product.component';
 import { SalesComponent } from './sales/sales/sales.component';
 import { AuthModule } from '../auth/auth.module';
+import { FABComponent } from './products/components/fab/fab.component';
+import { ModalProductFormComponent } from './products/components/modal-product-form/modal-product-form.component';
+import { ModalSalesFormComponent } from './sales/components/modal-sales-form/modal-sales-form.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { AuthModule } from '../auth/auth.module';
     ProfileComponent,
     ModalProductFormComponent,
     FABComponent,
+    ModalSalesFormComponent,
   ],
   imports: [
     CommonModule,

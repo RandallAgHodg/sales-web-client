@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/types/products/product.type';
 import { ProductsService } from '../products.service';
-import { ModalService } from '../../components/modal.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
+import { ModalService } from '../components/modal.service';
 
 @Component({
   selector: 'app-product',
@@ -13,6 +13,7 @@ import { switchMap } from 'rxjs';
 export class ProductComponent implements OnInit {
   product!: Product;
   errors: string[] = [];
+  class: [string, string, string] = ['', '', ''];
   constructor(
     private readonly _activatedRoute: ActivatedRoute,
     private readonly _productService: ProductsService,
@@ -30,6 +31,17 @@ export class ProductComponent implements OnInit {
       .subscribe((resp) => {
         if (resp.ok === true) {
           this.product = resp.data;
+          this.class = this.product.isAvailable
+            ? [
+                'flex p-1 border-round align-items-center bg-green-100 text-white ',
+                'font-light pl-1',
+                'pi pi-thumbs-up text-white text-2xl',
+              ]
+            : [
+                'flex px-8 py-0 align-self-center border-round-xl justify-content-center align-items-center bg-red-100 text-white ',
+                'font-light pl-1',
+                'pi pi-thumbs-down text-white text-2xl',
+              ];
         } else {
           this._router.navigateByUrl('/dashboard/products');
         }

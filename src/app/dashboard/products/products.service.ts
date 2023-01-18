@@ -35,14 +35,18 @@ export class ProductsService {
   }
 
   searchProducts(request: SearchProductRequest) {
-    const url = `${this.url}/search?isAvailable=${String(request.isAvailable)}${
-      request.name && `&name=${request.name}`
-    }`;
-    return this._http.get<BaseResponse<Product[]>>(url).pipe(
-      map((resp) => {
-        return resp.data;
+    const url = `${this.url}/search`;
+    return this._http
+      .get<BaseResponse<Product[]>>(url, {
+        params: {
+          ...request,
+        },
       })
-    );
+      .pipe(
+        map((resp) => {
+          return resp.data;
+        })
+      );
   }
 
   addProduct(request: CreateProductRequest) {
@@ -59,11 +63,10 @@ export class ProductsService {
   }
 
   updateProduct(request: UpdateProductRequest) {
-    console.log(request);
+    console.log(JSON.stringify(request.id) + 'ASDASDSA');
 
-    const url = `${this.url}/${request.id}`;
     return this._http
-      .put<BaseResponse<string>>(url, request)
+      .put<BaseResponse<string>>(`${this.url}/${request.id}`, request)
       .pipe(catchError((err) => of(err.error.errors)));
   }
 

@@ -1,4 +1,10 @@
 <div *ngIf="product" class="flex flex-column gap-5">
+  <div [class]="class[0]">
+    <i [class]="class[2]"></i>
+    <h1 [class]="class[1]">
+      {{ product.isAvailable ? "Available" : "Unavailable" }}
+    </h1>
+  </div>
   <div class="flex justify-content-evenly">
     <div class="flex flex-column align-items-center">
       <h2 class="font-light">

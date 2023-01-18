@@ -1,5 +1,5 @@
 <p-dialog
-  header="Add New Product"
+  [header]="formText[0]"
   (onHide)="hideModal()"
   [closable]="false"
   [visible]="isModalVisible"
@@ -85,7 +85,7 @@
         [disabled]="!isValidForm()"
         (click)="handleProductUpload()"
         icon="pi pi-check"
-        label="add"
+        [label]="formText[1]"
         class="p-button-text"
       ></button>
       <div *ngIf="isLoading">
