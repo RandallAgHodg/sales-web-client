@@ -62,7 +62,7 @@ export class ProductsComponent implements OnInit {
           });
       } else {
         this._productService
-          .searchProducts(this.searchForm.value)
+          .searchProducts({ ...this.searchForm.value })
           .subscribe((resp) => {
             this.products = resp;
           });
@@ -75,8 +75,6 @@ export class ProductsComponent implements OnInit {
     this.isLoadingProducts = true;
 
     if (this.searchForm.controls['name'].value === '') {
-      console.log('vacio');
-
       this._productService.getAllProducts().subscribe((resp) => {
         this.products = resp;
       });

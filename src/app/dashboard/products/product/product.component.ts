@@ -33,7 +33,7 @@ export class ProductComponent implements OnInit {
           this.product = resp.data;
           this.class = this.product.isAvailable
             ? [
-                'flex p-1 border-round align-items-center bg-green-100 text-white ',
+                'flex px-8 py-0 align-self-center border-round-xl justify-content-center align-items-center bg-green-100 text-white ',
                 'font-light pl-1',
                 'pi pi-thumbs-up text-white text-2xl',
               ]

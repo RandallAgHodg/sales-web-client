@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 import { BaseResponse } from 'src/app/types/contracts/baseResponse.type';
 import {
   Product,
@@ -50,9 +50,10 @@ export class ProductsService {
   }
 
   addProduct(request: CreateProductRequest) {
-    return this._http
-      .post<BaseResponse<Product>>(this.url, request)
-      .pipe(catchError((err) => of(err.error.errors)));
+    return this._http.post<BaseResponse<Product>>(this.url, request).pipe(
+      tap((resp) => console.log(resp)),
+      catchError((err) => of(err.error.errors))
+    );
   }
 
   getProductById(id: string) {
@@ -63,8 +64,6 @@ export class ProductsService {
   }
 
   updateProduct(request: UpdateProductRequest) {
-    console.log(JSON.stringify(request.id) + 'ASDASDSA');
-
     return this._http
       .put<BaseResponse<string>>(`${this.url}/${request.id}`, request)
       .pipe(catchError((err) => of(err.error.errors)));

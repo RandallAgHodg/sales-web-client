@@ -86,6 +86,8 @@ export class ModalProductFormComponent implements OnInit {
           this._router.navigate([`/dashboard/product/${resp.data.id}`]);
           this.isLoading = false;
         } else {
+          console.log(resp);
+
           this.errors = resp as unknown as string[];
           this.isLoading = false;
         }

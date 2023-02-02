@@ -1,1 +1,24 @@
-<p>sales works!</p>
+<div class="relative flex flex-column justify-content-start h-full">
+  <div *ngIf="isLoadingSales" class="flex justify-content-center">
+    <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+  </div>
+  <div
+    *ngIf="!isLoadingSales"
+    class="max-w-full justify-content-center grid p-3 gap-3"
+  >
+    <div *ngIf="sales.length === 0">Sales were not found :/</div>
+    <div
+      [routerLink]="['/dashboard/sale/', sale.id]"
+      class="col-3 cursor-pointer border-round border-white bg-primary border-1"
+      *ngFor="let sale of sales"
+    >
+      <div>
+        <h2>{{ sale.id }}</h2>
+        <h3>{{ sale.total | currency : "USD" }}</h3>
+        <h5 class="">Seller: {{ sale.user.email }}</h5>
+      </div>
+    </div>
+  </div>
+  <app-fab></app-fab>
+</div>
+<app-modal-sales-form></app-modal-sales-form>
